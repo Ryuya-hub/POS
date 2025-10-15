@@ -8,63 +8,7 @@ let isQuaggaRunning = false;
 // 初期化
 async function init() {
     await loadProducts();
-    loadBarcodeImages();
     updateCart();
-}
-
-// バーコード画像の読み込みと表示
-function loadBarcodeImages() {
-    const barcodeImagesArea = document.getElementById('barcodeImagesArea');
-
-    // バーコード画像のリスト（products.jsonと対応）
-    const barcodeImages = [
-        { file: 'barcodes/barcode_1_tape.svg', code: '4901991001013', name: 'テープのり' },
-        { file: 'barcodes/barcode_2_pen.svg', code: '4901991002010', name: 'ボールペン（黒）' },
-        { file: 'barcodes/barcode_3_notebook.svg', code: '4901991003017', name: 'ノート（A4）' },
-        { file: 'barcodes/barcode_4_clearfile.svg', code: '4901991004014', name: 'クリアファイル' },
-        { file: 'barcodes/barcode_5_stapler.svg', code: '4901991005011', name: 'ホッチキス' }
-    ];
-
-    barcodeImages.forEach(barcode => {
-        const imgContainer = document.createElement('div');
-        imgContainer.style.cssText = 'cursor: pointer; border: 2px solid #e5e7eb; border-radius: 8px; padding: 10px; transition: all 0.2s; background: white;';
-        imgContainer.innerHTML = `
-            <img src="${barcode.file}" alt="Barcode ${barcode.code}" style="width: 100%; height: auto; display: block;">
-            <div style="margin-top: 10px; text-align: center; font-size: 12px; color: #6b7280;">
-                <div style="font-weight: bold; color: #1f2937;">${barcode.name}</div>
-                <div style="font-family: monospace; margin-top: 4px;">${barcode.code}</div>
-            </div>
-        `;
-
-        // ホバー効果
-        imgContainer.addEventListener('mouseenter', function() {
-            this.style.borderColor = '#3b82f6';
-            this.style.boxShadow = '0 4px 6px rgba(59, 130, 246, 0.2)';
-            this.style.transform = 'scale(1.02)';
-        });
-
-        imgContainer.addEventListener('mouseleave', function() {
-            this.style.borderColor = '#e5e7eb';
-            this.style.boxShadow = 'none';
-            this.style.transform = 'scale(1)';
-        });
-
-        // クリックでカートに追加
-        imgContainer.addEventListener('click', function() {
-            console.log('バーコード画像クリック:', barcode.code);
-            addToCart(barcode.code);
-
-            // フィードバック効果
-            this.style.backgroundColor = '#dcfce7';
-            setTimeout(() => {
-                this.style.backgroundColor = 'white';
-            }, 300);
-        });
-
-        barcodeImagesArea.appendChild(imgContainer);
-    });
-
-    console.log('バーコード画像を読み込みました:', barcodeImages.length, '個');
 }
 
 // 商品データの読み込み
